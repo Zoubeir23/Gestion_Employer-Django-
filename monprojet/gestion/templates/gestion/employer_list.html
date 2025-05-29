@@ -1,0 +1,50 @@
+{% extends 'gestion/base.html' %}
+{% load static %}
+
+{% block title %}Liste des Employés{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h2 class="mb-4">Liste des Employés</h2>
+        <a href="{% url 'employer_create' %}" class="btn btn-primary mb-3">
+            <i class="fas fa-plus"></i> Nouvel Employé
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    {% for employer in employers %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">{{ employer.nom }}</h5>
+                <p class="card-text">
+                    <strong>Service:</strong> {{ employer.service.nom }}<br>
+                    <strong>Date d'embauche:</strong> {{ employer.date_embauche|date:"d/m/Y" }}
+                </p>
+            </div>
+            <div class="card-footer bg-transparent">
+                <div class="btn-group" role="group">
+                    <a href="{% url 'employer_detail' employer.id %}" class="btn btn-info btn-sm">
+                        <i class="fas fa-eye"></i> Détails
+                    </a>
+                    <a href="{% url 'employer_update' employer.id %}" class="btn btn-warning btn-sm">
+                        <i class="fas fa-edit"></i> Modifier
+                    </a>
+                    <a href="{% url 'employer_delete' employer.id %}" class="btn btn-danger btn-sm delete-confirm">
+                        <i class="fas fa-trash"></i> Supprimer
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col">
+        <div class="alert alert-info">
+            Aucun employé n'a été enregistré pour le moment.
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %} 
