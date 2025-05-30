@@ -69,6 +69,13 @@ myenv\Scripts\activate     # Windows
 pip install -r requirements.txt
 ```
 
+Le fichier `requirements.txt` contient toutes les dépendances nécessaires :
+- Django==5.2.1
+- django-crispy-forms==2.1
+- crispy-bootstrap5==2023.10
+- psycopg2-binary==2.9.9
+- python-dotenv==1.0.0
+
 4. Configurer la base de données :
 - Créer une base de données PostgreSQL
 - Mettre à jour les paramètres de connexion dans `settings.py`

@@ -43,11 +43,31 @@ monprojet/
 │   ├── views.py                   # Vues
 │   ├── forms.py                   # Formulaires
 │   └── urls.py                    # Configuration des URLs
-└── monprojet/
-    ├── settings.py                # Configuration du projet
-    ├── urls.py                    # URLs principales
-    └── wsgi.py                    # Configuration WSGI
+├── monprojet/
+│   ├── settings.py                # Configuration du projet
+│   ├── urls.py                    # URLs principales
+│   └── wsgi.py                    # Configuration WSGI
+├── requirements.txt               # Dépendances du projet
+└── manage.py                      # Script de gestion Django
 ```
+
+### Dépendances du Projet
+Le fichier `requirements.txt` contient toutes les dépendances nécessaires pour le projet :
+
+```txt
+Django==5.2.1
+django-crispy-forms==2.1
+crispy-bootstrap5==2023.10
+psycopg2-binary==2.9.9
+python-dotenv==1.0.0
+```
+
+Ces dépendances incluent :
+- Django : Framework web principal
+- django-crispy-forms : Pour la gestion des formulaires
+- crispy-bootstrap5 : Pour le style des formulaires
+- psycopg2-binary : Pour la connexion à PostgreSQL
+- python-dotenv : Pour la gestion des variables d'environnement
 
 ## Modèles de Données
 
