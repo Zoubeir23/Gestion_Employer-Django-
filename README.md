@@ -1,5 +1,8 @@
 # Système de Gestion des Employés
 
+**Auteur :** Zoubeir23  
+**Email :** Zoubeiribrahima@gmail.com
+
 Une application Django moderne pour la gestion des employés, des services et des congés.
 
 ## Fonctionnalités

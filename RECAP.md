@@ -1,5 +1,8 @@
 # Documentation Technique - Système de Gestion des Employés
 
+**Auteur :** Zoubeir23  
+**Email :** Zoubeiribrahima@gmail.com
+
 ## Table des Matières
 1. [Introduction](#introduction)
 2. [Architecture du Projet](#architecture-du-projet)
