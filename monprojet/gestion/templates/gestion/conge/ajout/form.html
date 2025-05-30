@@ -1,0 +1,19 @@
+{% extends 'gestion/shared/form_base.html' %}
+
+{% block form_title %}
+    {% if form.instance.pk %}
+        Modifier la demande de congé
+    {% else %}
+        Nouvelle demande de congé
+    {% endif %}
+{% endblock %}
+
+{% block submit_text %}
+    {% if form.instance.pk %}
+        Mettre à jour
+    {% else %}
+        Soumettre
+    {% endif %}
+{% endblock %}
+
+{% block cancel_url %}{% url 'conge-list' %}{% endblock %} 

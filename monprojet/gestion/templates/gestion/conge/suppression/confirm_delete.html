@@ -1,0 +1,38 @@
+{% extends 'gestion/base.html' %}
+
+{% block title %}Confirmer la suppression{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header bg-danger text-white">
+            <h4 class="mb-0">
+                <i class="fas fa-exclamation-triangle"></i> Confirmer la suppression
+            </h4>
+        </div>
+        <div class="card-body">
+            <p class="lead">Êtes-vous sûr de vouloir supprimer la demande de congé de "{{ object.employer.nom }} {{ object.employer.prenom }}" ?</p>
+            
+            <p class="text-muted">
+                Période : {{ object.date_debut|date:"d/m/Y" }} - {{ object.date_fin|date:"d/m/Y" }}<br>
+                Type : {{ object.get_type_display }}<br>
+                Statut : {{ object.get_statut_display }}
+            </p>
+            
+            <p class="text-danger">Cette action est irréversible.</p>
+            
+            <form method="post">
+                {% csrf_token %}
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Confirmer la suppression
+                    </button>
+                    <a href="{% url 'conge-list' %}" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Annuler
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %} 

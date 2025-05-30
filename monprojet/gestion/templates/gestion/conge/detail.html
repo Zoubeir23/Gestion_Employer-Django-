@@ -1,0 +1,117 @@
+{% extends 'gestion/shared/detail_base.html' %}
+
+{% block detail_title %}Congé : {{ conge.employer.nom }} {{ conge.employer.prenom }}{% endblock %}
+
+{% block detail_icon %}<i class="fas fa-calendar-alt me-2"></i>{% endblock %}
+{% block detail_title_content %}Demande de congé{% endblock %}
+
+{% block update_url %}{% url 'conge-update' conge.pk %}{% endblock %}
+{% block delete_url %}{% url 'conge-delete' conge.pk %}{% endblock %}
+
+{% block detail_content %}
+<div class="card mb-4">
+    <div class="card-header bg-light">
+        <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Informations du congé</h5>
+    </div>
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-3">Employé</dt>
+            <dd class="col-sm-9">
+                <a href="{% url 'employer-detail' conge.employer.pk %}" class="text-decoration-none">
+                    {{ conge.employer.nom }} {{ conge.employer.prenom }}
+                </a>
+            </dd>
+
+            <dt class="col-sm-3">Type de congé</dt>
+            <dd class="col-sm-9">{{ conge.type_conge }}</dd>
+
+            <dt class="col-sm-3">Date de début</dt>
+            <dd class="col-sm-9">{{ conge.date_debut|date:"d/m/Y" }}</dd>
+
+            <dt class="col-sm-3">Date de fin</dt>
+            <dd class="col-sm-9">{{ conge.date_fin|date:"d/m/Y" }}</dd>
+
+            <dt class="col-sm-3">Durée</dt>
+            <dd class="col-sm-9">{{ conge.duree }} jour(s)</dd>
+
+            <dt class="col-sm-3">Statut</dt>
+            <dd class="col-sm-9">
+                {% if conge.statut == 'EN_ATTENTE' %}
+                    <span class="badge bg-warning">En attente</span>
+                {% elif conge.statut == 'APPROUVE' %}
+                    <span class="badge bg-success">Approuvé</span>
+                {% else %}
+                    <span class="badge bg-danger">Rejeté</span>
+                {% endif %}
+            </dd>
+
+            <dt class="col-sm-3">Motif</dt>
+            <dd class="col-sm-9">{{ conge.motif|default:"-" }}</dd>
+        </dl>
+    </div>
+</div>
+
+{% if conge.statut == 'EN_ATTENTE' %}
+<div class="card">
+    <div class="card-header bg-light">
+        <h5 class="mb-0"><i class="fas fa-tasks me-2"></i>Actions</h5>
+    </div>
+    <div class="card-body">
+        <div class="d-flex gap-2">
+            <form method="post" action="{% url 'approuver-conge' conge.pk %}" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-check"></i> Approuver
+                </button>
+            </form>
+            <form method="post" action="{% url 'rejeter-conge' conge.pk %}" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">
+                    <i class="fas fa-times"></i> Rejeter
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block detail_sidebar %}
+<div class="card mb-4">
+    <div class="card-header bg-light">
+        <h5 class="mb-0"><i class="fas fa-user me-2"></i>Informations employé</h5>
+    </div>
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-4">Service</dt>
+            <dd class="col-sm-8">
+                <a href="{% url 'service-detail' conge.employer.service.pk %}" class="text-decoration-none">
+                    <span class="badge bg-secondary">{{ conge.employer.service.nom }}</span>
+                </a>
+            </dd>
+
+            <dt class="col-sm-4">Poste</dt>
+            <dd class="col-sm-8">{{ conge.employer.poste|default:"-" }}</dd>
+
+            <dt class="col-sm-4">Email</dt>
+            <dd class="col-sm-8">{{ conge.employer.email }}</dd>
+        </dl>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header bg-light">
+        <h5 class="mb-0"><i class="fas fa-link me-2"></i>Liens rapides</h5>
+    </div>
+    <div class="card-body">
+        <div class="list-group">
+            <a href="{% url 'conge-list' %}" class="list-group-item list-group-item-action">
+                <i class="fas fa-list me-2"></i>Retour à la liste
+            </a>
+            <a href="{% url 'employer-detail' conge.employer.pk %}" class="list-group-item list-group-item-action">
+                <i class="fas fa-user me-2"></i>Voir l'employé
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %} 

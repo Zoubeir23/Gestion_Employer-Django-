@@ -1,160 +1,117 @@
-# Système de Gestion des Employés
+# Gestion des Employés et Congés
 
-**Auteur :** Zoubeir23  
-**Email :** Zoubeiribrahima@gmail.com
-
-Une application Django moderne pour la gestion des employés, des services et des congés.
+Une application Django pour la gestion des employés et des congés.
 
 ## Fonctionnalités
 
 ### Gestion des Employés
-- Création, modification et suppression d'employés
-- Informations détaillées (nom, prénom, email, téléphone, genre, etc.)
-- Association avec un service
-- Gestion des salaires et des postes
-- Pagination et recherche des employés
-- Interface utilisateur intuitive avec Bootstrap 5
+- Liste des employés avec recherche et filtrage
+- Détails des employés avec historique des congés
+- Ajout, modification et suppression d'employés
+- Statistiques par employé
 
 ### Gestion des Services
-- Création et gestion des services
-- Nombre d'employés par service
-- Description détaillée des services
-- Interface de gestion complète
+- Liste des services avec nombre d'employés
+- Détails des services avec liste des employés
+- Ajout, modification et suppression de services
 
 ### Gestion des Congés
-- Demandes de congés (annuel, maladie, maternité, paternité)
-- Suivi des statuts (en attente, approuvé, rejeté)
-- Validation des demandes
-- Filtrage et recherche des congés
-- Interface de gestion des demandes
+- Liste des congés avec filtrage par statut
+- Détails des congés avec informations complètes
+- Demande de congé avec validation
+- Approbation/Rejet des congés par les administrateurs
+- Historique des congés par employé
 
-### Interface Utilisateur
-- Design moderne avec Bootstrap 5
-- Formulaires stylisés avec django-crispy-forms
-- Messages de confirmation pour chaque action
-- Navigation intuitive
-- Tableau de bord avec statistiques
-- Responsive design
-
-## Technologies Utilisées
-- Python 3.8+
-- Django 5.2
-- PostgreSQL
-- Bootstrap 5
-- django-crispy-forms
-- crispy-bootstrap5
-
-## Prérequis
-- Python 3.8 ou supérieur
-- PostgreSQL
-- pip (gestionnaire de paquets Python)
+### Interface d'Administration
+- Dashboard admin complet (`/admin/`)
+- Gestion des congés avec filtres avancés
+- Gestion des employés et services
+- Recherche et tri des données
+- Statistiques globales
 
 ## Installation
 
-1. Cloner le dépôt :
+1. Cloner le repository
 ```bash
 git clone [URL_DU_REPO]
 cd gestion_employes
 ```
 
-2. Créer un environnement virtuel :
+2. Créer un environnement virtuel
 ```bash
 python -m venv myenv
 source myenv/bin/activate  # Linux/Mac
 myenv\Scripts\activate     # Windows
 ```
 
-3. Installer les dépendances :
+3. Installer les dépendances
 ```bash
 pip install -r requirements.txt
 ```
 
-Le fichier `requirements.txt` contient toutes les dépendances nécessaires :
-- Django==5.2.1
-- django-crispy-forms==2.1
-- crispy-bootstrap5==2023.10
-- psycopg2-binary==2.9.9
-- python-dotenv==1.0.0
-
-4. Configurer la base de données :
-- Créer une base de données PostgreSQL
-- Mettre à jour les paramètres de connexion dans `settings.py`
-
-5. Effectuer les migrations :
+4. Configurer la base de données
 ```bash
-python manage.py makemigrations
 python manage.py migrate
 ```
 
-6. Créer un superutilisateur :
+5. Créer un superuser
 ```bash
 python manage.py createsuperuser
 ```
 
-7. Lancer le serveur de développement :
+6. Lancer le serveur
 ```bash
 python manage.py runserver
 ```
 
+## Utilisation
+
+### Interface Utilisateur
+- Accéder à l'application : `http://localhost:8000`
+- Gérer les employés : `/employes/`
+- Gérer les services : `/services/`
+- Gérer les congés : `/conges/`
+
+### Interface d'Administration
+- Accéder à l'admin : `http://localhost:8000/admin`
+- Se connecter avec les identifiants superuser
+- Gérer tous les aspects de l'application
+
+## Technologies Utilisées
+
+- Django 5.2
+- PostgreSQL
+- Bootstrap 5
+- Font Awesome
+- Crispy Forms
+
 ## Structure du Projet
+
 ```
 monprojet/
 ├── gestion/
-│   ├── templates/
-│   │   └── gestion/
-│   │       ├── base.html
-│   │       ├── form_base.html
-│   │       ├── home.html
-│   │       ├── employer_list.html
-│   │       ├── employer_form.html
-│   │       ├── service_list.html
-│   │       ├── service_form.html
-│   │       ├── conge_list.html
-│   │       └── conge_form.html
-│   ├── models.py
-│   ├── views.py
-│   ├── forms.py
-│   └── urls.py
+│   ├── models.py      # Modèles de données
+│   ├── views.py       # Vues de l'application
+│   ├── forms.py       # Formulaires
+│   ├── admin.py       # Configuration admin
+│   └── templates/     # Templates HTML
 ├── monprojet/
-│   ├── settings.py
-│   ├── urls.py
-│   └── wsgi.py
-└── manage.py
+│   ├── settings.py    # Configuration
+│   ├── urls.py        # URLs principales
+│   └── wsgi.py        # Configuration WSGI
+└── manage.py          # Script de gestion Django
 ```
 
-## Utilisation
-
-1. Accéder à l'interface d'administration :
-   - URL : http://localhost:8000/admin
-   - Utiliser les identifiants du superutilisateur
-
-2. Accéder à l'application :
-   - URL : http://localhost:8000
-   - Interface principale avec tableau de bord
-
-## Fonctionnalités des Formulaires
-- Validation des données en temps réel
-- Messages d'erreur clairs
-- Champs obligatoires marqués
-- Interface utilisateur intuitive
-- Support des dates avec sélecteur de calendrier
-- Gestion des relations entre modèles
-
-## Sécurité
-- Authentification requise pour toutes les actions
-- Protection CSRF
-- Validation des données côté serveur
-- Gestion sécurisée des mots de passe
-
 ## Contribution
-Les contributions sont les bienvenues ! N'hésitez pas à :
+
 1. Fork le projet
-2. Créer une branche pour votre fonctionnalité
-3. Commiter vos changements
-4. Pousser vers la branche
+2. Créer une branche (`git checkout -b feature/AmazingFeature`)
+3. Commit les changements (`git commit -m 'Add some AmazingFeature'`)
+4. Push vers la branche (`git push origin feature/AmazingFeature`)
 5. Ouvrir une Pull Request
 
 ## Licence
+
 Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
 
 ## Contact

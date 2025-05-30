@@ -1,0 +1,79 @@
+{% extends 'gestion/shared/list_base.html' %}
+
+{% block list_title %}Liste des Congés{% endblock %}
+
+{% block list_icon %}<i class="fas fa-calendar-alt me-2"></i>{% endblock %}
+{% block list_title_content %}Liste des Congés{% endblock %}
+
+{% block create_url %}{% url 'conge-create' %}{% endblock %}
+
+{% block search_form %}
+<div class="row mb-4">
+    <div class="col-md-6">
+        <form method="get" class="d-flex">
+            <select name="statut" class="form-select me-2">
+                <option value="">Tous les statuts</option>
+                <option value="EN_ATTENTE" {% if request.GET.statut == 'EN_ATTENTE' %}selected{% endif %}>En attente</option>
+                <option value="APPROUVE" {% if request.GET.statut == 'APPROUVE' %}selected{% endif %}>Approuvé</option>
+                <option value="REJETE" {% if request.GET.statut == 'REJETE' %}selected{% endif %}>Rejeté</option>
+            </select>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-filter"></i> Filtrer
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block table_headers %}
+<tr>
+    <th>Employé</th>
+    <th>Type</th>
+    <th>Date de début</th>
+    <th>Date de fin</th>
+    <th>Statut</th>
+    <th>Actions</th>
+</tr>
+{% endblock %}
+
+{% block table_body %}
+{% for conge in conges %}
+<tr>
+    <td>{{ conge.employer.nom }} {{ conge.employer.prenom }}</td>
+    <td>{{ conge.type_conge }}</td>
+    <td>{{ conge.date_debut|date:"d/m/Y" }}</td>
+    <td>{{ conge.date_fin|date:"d/m/Y" }}</td>
+    <td>
+        {% if conge.statut == 'EN_ATTENTE' %}
+            <span class="badge bg-warning">En attente</span>
+        {% elif conge.statut == 'APPROUVE' %}
+            <span class="badge bg-success">Approuvé</span>
+        {% else %}
+            <span class="badge bg-danger">Rejeté</span>
+        {% endif %}
+    </td>
+    <td>
+        <div class="btn-group">
+            <a href="{% url 'conge-detail' conge.pk %}" class="btn btn-sm btn-info" title="Voir">
+                <i class="fas fa-eye"></i>
+            </a>
+            <a href="{% url 'conge-update' conge.pk %}" class="btn btn-sm btn-warning" title="Modifier">
+                <i class="fas fa-edit"></i>
+            </a>
+            <a href="{% url 'conge-delete' conge.pk %}" class="btn btn-sm btn-danger" title="Supprimer">
+                <i class="fas fa-trash"></i>
+            </a>
+            {% if conge.statut == 'EN_ATTENTE' and user.is_staff %}
+                <a href="{% url 'conge-approbation' conge.pk %}" class="btn btn-sm btn-success" title="Décider">
+                    <i class="fas fa-gavel"></i> Décider
+                </a>
+            {% endif %}
+        </div>
+    </td>
+</tr>
+{% empty %}
+<tr>
+    <td colspan="6" class="text-center">Aucun congé trouvé</td>
+</tr>
+{% endfor %}
+{% endblock %} 

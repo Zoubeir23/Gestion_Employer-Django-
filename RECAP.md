@@ -119,6 +119,8 @@ class Conge(models.Model):
     date_fin = models.DateField()
     raison = models.TextField(blank=True, null=True)
     statut = models.CharField(max_length=20, choices=STATUT_CHOICES, default='EN_ATTENTE')
+    date_demande = models.DateTimeField(auto_now_add=True)
+    approuve_par = models.ForeignKey(Employer, on_delete=models.SET_NULL, null=True, blank=True, related_name='conges_approuves')
 ```
 
 ## Vues et Templates
@@ -295,4 +297,77 @@ DATABASES = {
 - Optimiser les requêtes de base de données
 - Mettre en cache les données fréquemment utilisées
 - Minimiser les fichiers statiques
-- Utiliser la pagination pour les grandes listes 
+- Utiliser la pagination pour les grandes listes
+
+# Récapitulatif des Fonctionnalités
+
+## 1. Gestion des Employés
+- ✅ Liste des employés avec recherche
+- ✅ Détails des employés
+- ✅ Ajout/Modification/Suppression
+- ✅ Association avec services
+- ✅ Historique des congés
+
+## 2. Gestion des Services
+- ✅ Liste des services
+- ✅ Détails des services
+- ✅ Ajout/Modification/Suppression
+- ✅ Nombre d'employés par service
+
+## 3. Gestion des Congés
+- ✅ Liste des congés avec filtres
+- ✅ Détails des congés
+- ✅ Demande de congé
+- ✅ Approbation/Rejet par admin
+- ✅ Historique par employé
+
+## 4. Interface d'Administration
+- ✅ Dashboard admin complet
+- ✅ Gestion des congés
+- ✅ Gestion des employés
+- ✅ Gestion des services
+- ✅ Filtres et recherche
+
+## 5. Sécurité
+- ✅ Authentification requise
+- ✅ Protection CSRF
+- ✅ Validation des données
+- ✅ Gestion des permissions
+
+## 6. Interface Utilisateur
+- ✅ Design moderne (Bootstrap 5)
+- ✅ Formulaires stylisés
+- ✅ Messages de confirmation
+- ✅ Navigation intuitive
+- ✅ Responsive design
+
+## 7. Base de Données
+- ✅ Modèles optimisés
+- ✅ Relations bien définies
+- ✅ Migrations à jour
+- ✅ PostgreSQL configuré
+
+## 8. Fonctionnalités Avancées
+- ✅ Filtrage des congés
+- ✅ Recherche globale
+- ✅ Statistiques
+- ✅ Export des données
+
+## 9. Documentation
+- ✅ README complet
+- ✅ Instructions d'installation
+- ✅ Guide d'utilisation
+- ✅ Structure du projet
+
+## 10. Maintenance
+- ✅ Code propre et commenté
+- ✅ Structure modulaire
+- ✅ Tests unitaires
+- ✅ Gestion des erreurs
+
+## Prochaines Améliorations Possibles
+1. Ajout de notifications par email
+2. Système de rappels pour les congés
+3. Export PDF des rapports
+4. Tableau de bord personnalisé
+5. API REST pour intégration 

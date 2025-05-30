@@ -1,0 +1,33 @@
+{% extends 'gestion/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    {% if object %}Modifier l'employé{% else %}Nouvel employé{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">
+                <i class="fas fa-user"></i>
+                {% if object %}Modifier l'employé{% else %}Nouvel employé{% endif %}
+            </h4>
+        </div>
+        <div class="card-body">
+            <form method="post" novalidate>
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Enregistrer
+                    </button>
+                    <a href="{% url 'employer-list' %}" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Annuler
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %} 

@@ -1,10 +1,10 @@
-{% extends 'gestion/form_base.html' %}
+{% extends 'gestion/shared/form_base.html' %}
 
 {% block form_title %}
     {% if form.instance.pk %}
-        Modifier l'employé
+        Modifier la demande de congé
     {% else %}
-        Nouvel employé
+        Nouvelle demande de congé
     {% endif %}
 {% endblock %}
 
@@ -12,8 +12,8 @@
     {% if form.instance.pk %}
         Mettre à jour
     {% else %}
-        Créer
+        Soumettre
     {% endif %}
 {% endblock %}
 
-{% block cancel_url %}{% url 'employer-list' %}{% endblock %} 
+{% block cancel_url %}{% url 'conge-list' %}{% endblock %} 

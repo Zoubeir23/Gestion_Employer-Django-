@@ -1,0 +1,83 @@
+{% extends 'gestion/shared/form_base.html' %}
+{% load crispy_forms_tags %}
+
+{% block form_title %}Nouvel Employé{% endblock %}
+
+{% block form_icon %}<i class="fas fa-user-plus me-2"></i>{% endblock %}
+{% block form_title_content %}Nouvel Employé{% endblock %}
+
+{% block form_content %}
+<div class="card mb-4">
+    <div class="card-header bg-light">
+        <h5 class="mb-0"><i class="fas fa-user me-2"></i>Informations personnelles</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                {{ form.nom|as_crispy_field }}
+            </div>
+            <div class="col-md-6">
+                {{ form.prenom|as_crispy_field }}
+            </div>
+            <div class="col-md-6">
+                {{ form.genre|as_crispy_field }}
+            </div>
+            <div class="col-md-6">
+                {{ form.email|as_crispy_field }}
+            </div>
+            <div class="col-md-6">
+                {{ form.telephone|as_crispy_field }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header bg-light">
+        <h5 class="mb-0"><i class="fas fa-briefcase me-2"></i>Informations professionnelles</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                {{ form.service|as_crispy_field }}
+            </div>
+            <div class="col-md-6">
+                {{ form.poste|as_crispy_field }}
+            </div>
+            <div class="col-md-6">
+                {{ form.date_embauche|as_crispy_field }}
+            </div>
+            <div class="col-md-6">
+                {{ form.salaire|as_crispy_field }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block form_sidebar %}
+<div class="card">
+    <div class="card-header bg-light">
+        <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Informations</h5>
+    </div>
+    <div class="card-body">
+        <p class="text-muted">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            Remplissez tous les champs obligatoires pour créer un nouvel employé.
+        </p>
+        <hr>
+        <p class="text-muted">
+            <i class="fas fa-envelope me-2"></i>
+            L'adresse email doit être unique et valide.
+        </p>
+        <hr>
+        <p class="text-muted">
+            <i class="fas fa-calendar me-2"></i>
+            La date d'embauche ne peut pas être dans le futur.
+        </p>
+    </div>
+</div>
+{% endblock %}
+
+{% block cancel_url %}{% url 'employer-list' %}{% endblock %}
+{% block submit_text %}Créer l'employé{% endblock %} 

@@ -1,0 +1,46 @@
+{% extends 'gestion/shared/list_base.html' %}
+
+{% block list_title %}Liste des Services{% endblock %}
+
+{% block list_icon %}<i class="fas fa-building me-2"></i>{% endblock %}
+{% block list_title_content %}Liste des Services{% endblock %}
+
+{% block create_url %}{% url 'service-create' %}{% endblock %}
+
+{% block table_headers %}
+<tr>
+    <th>Nom</th>
+    <th>Description</th>
+    <th>Nombre d'employés</th>
+    <th>Actions</th>
+</tr>
+{% endblock %}
+
+{% block table_body %}
+{% for service in services %}
+<tr>
+    <td>{{ service.nom }}</td>
+    <td>{{ service.description|truncatechars:50 }}</td>
+    <td>
+        <span class="badge bg-info">{{ service.nombre_employes }}</span>
+    </td>
+    <td>
+        <div class="btn-group">
+            <a href="{% url 'service-detail' service.pk %}" class="btn btn-sm btn-info" title="Voir">
+                <i class="fas fa-eye"></i>
+            </a>
+            <a href="{% url 'service-update' service.pk %}" class="btn btn-sm btn-warning" title="Modifier">
+                <i class="fas fa-edit"></i>
+            </a>
+            <a href="{% url 'service-delete' service.pk %}" class="btn btn-sm btn-danger" title="Supprimer">
+                <i class="fas fa-trash"></i>
+            </a>
+        </div>
+    </td>
+</tr>
+{% empty %}
+<tr>
+    <td colspan="4" class="text-center">Aucun service trouvé</td>
+</tr>
+{% endfor %}
+{% endblock %} 

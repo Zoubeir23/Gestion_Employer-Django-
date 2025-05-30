@@ -1,0 +1,76 @@
+{% extends 'gestion/shared/form_base.html' %}
+{% load crispy_forms_tags %}
+
+{% block form_title %}Nouvelle Demande de Congé{% endblock %}
+
+{% block form_icon %}<i class="fas fa-calendar-plus me-2"></i>{% endblock %}
+{% block form_title_content %}Nouvelle Demande de Congé{% endblock %}
+
+{% block form_content %}
+<div class="card mb-4">
+    <div class="card-header bg-light">
+        <h5 class="mb-0"><i class="fas fa-user me-2"></i>Informations employé</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                {{ form.employer|as_crispy_field }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header bg-light">
+        <h5 class="mb-0"><i class="fas fa-calendar-alt me-2"></i>Détails du congé</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                {{ form.type_conge|as_crispy_field }}
+            </div>
+            <div class="col-md-6">
+                {{ form.date_debut|as_crispy_field }}
+            </div>
+            <div class="col-md-6">
+                {{ form.date_fin|as_crispy_field }}
+            </div>
+            <div class="col-md-12">
+                {{ form.raison|as_crispy_field }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block form_sidebar %}
+<div class="card">
+    <div class="card-header bg-light">
+        <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Informations</h5>
+    </div>
+    <div class="card-body">
+        <p class="text-muted">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            Remplissez tous les champs obligatoires pour créer une demande de congé.
+        </p>
+        <hr>
+        <p class="text-muted">
+            <i class="fas fa-calendar-check me-2"></i>
+            La date de début doit être postérieure à aujourd'hui.
+        </p>
+        <hr>
+        <p class="text-muted">
+            <i class="fas fa-calendar-times me-2"></i>
+            La date de fin doit être postérieure à la date de début.
+        </p>
+        <hr>
+        <p class="text-muted">
+            <i class="fas fa-clock me-2"></i>
+            La durée est calculée automatiquement en jours ouvrés.
+        </p>
+    </div>
+</div>
+{% endblock %}
+
+{% block cancel_url %}{% url 'conge-list' %}{% endblock %}
+{% block submit_text %}Soumettre la demande{% endblock %} 

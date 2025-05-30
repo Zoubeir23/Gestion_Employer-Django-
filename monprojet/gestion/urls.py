@@ -24,6 +24,5 @@ urlpatterns = [
     path('conges/nouveau/', views.CongeCreateView.as_view(), name='conge-create'),
     path('conges/<int:pk>/modifier/', views.CongeUpdateView.as_view(), name='conge-update'),
     path('conges/<int:pk>/supprimer/', views.CongeDeleteView.as_view(), name='conge-delete'),
-    path('conges/<int:pk>/approuver/', views.approuver_conge, name='conge-approuver'),
-    path('conges/<int:pk>/rejeter/', views.rejeter_conge, name='conge-rejeter'),
+    path('conges/<int:pk>/approbation/', views.CongeApprobationView.as_view(), name='conge-approbation'),
 ] 

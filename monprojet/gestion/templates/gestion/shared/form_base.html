@@ -1,0 +1,43 @@
+{% extends 'gestion/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}{% block form_title %}{% endblock %}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">
+                {% block form_icon %}{% endblock %}
+                {% block form_title_content %}{% endblock %}
+            </h4>
+        </div>
+        <div class="card-body">
+            {% include 'gestion/shared/messages.html' %}
+            
+            <form method="post" class="needs-validation" novalidate>
+                {% csrf_token %}
+                
+                <div class="row">
+                    <div class="col-md-8">
+                        {% block form_content %}{% endblock %}
+                    </div>
+                    <div class="col-md-4">
+                        {% block form_sidebar %}{% endblock %}
+                    </div>
+                </div>
+
+                <div class="mt-4 d-flex justify-content-between">
+                    <a href="{% block cancel_url %}{% endblock %}" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Annuler
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> {% block submit_text %}Enregistrer{% endblock %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %} 

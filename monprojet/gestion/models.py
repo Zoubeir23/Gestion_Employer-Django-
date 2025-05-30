@@ -18,6 +18,9 @@ class Service(models.Model):
     def __str__(self):
         return self.nom
 
+    def get_nombre_employes(self):
+        return self.employer_set.count()
+
 class Employer(models.Model):
     GENRE_CHOICES = [
         ('M', 'Masculin'),
@@ -70,6 +73,8 @@ class Conge(models.Model):
     statut = models.CharField(max_length=20, choices=STATUT_CHOICES, default='EN_ATTENTE', verbose_name="Statut")
     date_demande = models.DateTimeField(auto_now_add=True, verbose_name="Date de la demande")
     date_modification = models.DateTimeField(auto_now=True, verbose_name="Dernière modification")
+    approuve_par = models.ForeignKey(Employer, on_delete=models.SET_NULL, null=True, blank=True, related_name='conges_approuves', verbose_name="Approuvé par")
+    commentaire_approbation = models.TextField(blank=True, null=True, verbose_name="Commentaire d'approbation")
 
     class Meta:
         verbose_name = "Congé"

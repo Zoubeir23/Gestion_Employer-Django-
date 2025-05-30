@@ -1,0 +1,38 @@
+{% extends 'gestion/base.html' %}
+{% load static %}
+
+{% block title %}{% block list_title %}{% endblock %}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">
+                {% block list_icon %}{% endblock %}
+                {% block list_title_content %}{% endblock %}
+            </h4>
+            <a href="{% block create_url %}{% endblock %}" class="btn btn-light">
+                <i class="fas fa-plus"></i> Ajouter
+            </a>
+        </div>
+        <div class="card-body">
+            {% include 'gestion/shared/messages.html' %}
+            
+            {% block search_form %}{% endblock %}
+            
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        {% block table_headers %}{% endblock %}
+                    </thead>
+                    <tbody>
+                        {% block table_body %}{% endblock %}
+                    </tbody>
+                </table>
+            </div>
+            
+            {% include 'gestion/shared/pagination.html' %}
+        </div>
+    </div>
+</div>
+{% endblock %} 
