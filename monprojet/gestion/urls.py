@@ -2,27 +2,28 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    # Page d'accueil
-    path('', views.home, name='home'),
-
-    # URLs pour les Services
-    path('services/', views.ServiceListView.as_view(), name='service_list'),
-    path('services/<int:pk>/', views.ServiceDetailView.as_view(), name='service_detail'),
-    path('services/create/', views.ServiceCreateView.as_view(), name='service_create'),
-    path('services/<int:pk>/update/', views.ServiceUpdateView.as_view(), name='service_update'),
-    path('services/<int:pk>/delete/', views.ServiceDeleteView.as_view(), name='service_delete'),
-
-    # URLs pour les Employés
-    path('employers/', views.EmployerListView.as_view(), name='employer_list'),
-    path('employers/<int:pk>/', views.EmployerDetailView.as_view(), name='employer_detail'),
-    path('employers/create/', views.EmployerCreateView.as_view(), name='employer_create'),
-    path('employers/<int:pk>/update/', views.EmployerUpdateView.as_view(), name='employer_update'),
-    path('employers/<int:pk>/delete/', views.EmployerDeleteView.as_view(), name='employer_delete'),
-
-    # URLs pour les Congés
-    path('conges/', views.CongeListView.as_view(), name='conge_list'),
-    path('conges/<int:pk>/', views.CongeDetailView.as_view(), name='conge_detail'),
-    path('conges/create/', views.CongeCreateView.as_view(), name='conge_create'),
-    path('conges/<int:pk>/update/', views.CongeUpdateView.as_view(), name='conge_update'),
-    path('conges/<int:pk>/delete/', views.CongeDeleteView.as_view(), name='conge_delete'),
+    path('', views.HomeView.as_view(), name='home'),
+    
+    # URLs pour les employés
+    path('employes/', views.EmployerListView.as_view(), name='employer-list'),
+    path('employes/<int:pk>/', views.EmployerDetailView.as_view(), name='employer-detail'),
+    path('employes/nouveau/', views.EmployerCreateView.as_view(), name='employer-create'),
+    path('employes/<int:pk>/modifier/', views.EmployerUpdateView.as_view(), name='employer-update'),
+    path('employes/<int:pk>/supprimer/', views.EmployerDeleteView.as_view(), name='employer-delete'),
+    
+    # URLs pour les services
+    path('services/', views.ServiceListView.as_view(), name='service-list'),
+    path('services/<int:pk>/', views.ServiceDetailView.as_view(), name='service-detail'),
+    path('services/nouveau/', views.ServiceCreateView.as_view(), name='service-create'),
+    path('services/<int:pk>/modifier/', views.ServiceUpdateView.as_view(), name='service-update'),
+    path('services/<int:pk>/supprimer/', views.ServiceDeleteView.as_view(), name='service-delete'),
+    
+    # URLs pour les congés
+    path('conges/', views.CongeListView.as_view(), name='conge-list'),
+    path('conges/<int:pk>/', views.CongeDetailView.as_view(), name='conge-detail'),
+    path('conges/nouveau/', views.CongeCreateView.as_view(), name='conge-create'),
+    path('conges/<int:pk>/modifier/', views.CongeUpdateView.as_view(), name='conge-update'),
+    path('conges/<int:pk>/supprimer/', views.CongeDeleteView.as_view(), name='conge-delete'),
+    path('conges/<int:pk>/approuver/', views.approuver_conge, name='conge-approuver'),
+    path('conges/<int:pk>/rejeter/', views.rejeter_conge, name='conge-rejeter'),
 ] 

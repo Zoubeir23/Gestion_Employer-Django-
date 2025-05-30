@@ -1,0 +1,19 @@
+{% extends 'gestion/form_base.html' %}
+
+{% block form_title %}
+    {% if form.instance.pk %}
+        Modifier l'employé
+    {% else %}
+        Nouvel employé
+    {% endif %}
+{% endblock %}
+
+{% block submit_text %}
+    {% if form.instance.pk %}
+        Mettre à jour
+    {% else %}
+        Créer
+    {% endif %}
+{% endblock %}
+
+{% block cancel_url %}{% url 'employer-list' %}{% endblock %} 
