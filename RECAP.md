@@ -242,6 +242,41 @@ DATABASES = {
 }
 ```
 
+### Sauvegarde et Restauration
+
+#### Structure des Sauvegardes
+```
+monprojet/
+└── sauvegardes_db/    # Dossier pour les sauvegardes de la base de données
+    └── export_YYYYMMDD.sql  # Fichiers de sauvegarde datés
+```
+
+#### Méthodes de Sauvegarde
+
+1. **Via pgAdmin (Recommandé)**
+   - Ouvrir pgAdmin
+   - Clic droit sur la base de données
+   - Sélectionner "Backup..."
+   - Format : Custom
+   - Destination : `monprojet/sauvegardes_db/export_YYYYMMDD.sql`
+
+2. **Via Ligne de Commande**
+   ```bash
+   pg_dump -h localhost -U postgres -p 5432 -d gestion_employes > monprojet/sauvegardes_db/export_YYYYMMDD.sql
+   ```
+
+#### Restauration de la Base de Données
+```bash
+psql -h localhost -U postgres -d gestion_employes < monprojet/sauvegardes_db/export_YYYYMMDD.sql
+```
+
+#### Bonnes Pratiques
+- Effectuer des sauvegardes régulières
+- Nommer les fichiers avec la date (YYYYMMDD)
+- Conserver plusieurs versions de sauvegarde
+- Tester régulièrement la restauration
+- Stocker les sauvegardes dans un emplacement sécurisé
+
 ## Déploiement
 
 ### Étapes de Déploiement

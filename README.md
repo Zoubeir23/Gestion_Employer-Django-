@@ -99,7 +99,28 @@ monprojet/
 │   ├── settings.py    # Configuration
 │   ├── urls.py        # URLs principales
 │   └── wsgi.py        # Configuration WSGI
+├── sauvegardes_db/    # Sauvegardes de la base de données
 └── manage.py          # Script de gestion Django
+```
+
+## Sauvegarde de la Base de Données
+
+### Méthode 1 : Utilisation de pgAdmin
+1. Ouvrir pgAdmin
+2. Clic droit sur la base de données "gestion_employes"
+3. Sélectionner "Backup..."
+4. Choisir le format "Custom"
+5. Sélectionner le dossier `sauvegardes_db` comme destination
+6. Nommer le fichier avec la date (ex: `export_YYYYMMDD.sql`)
+
+### Méthode 2 : Utilisation de la ligne de commande
+```bash
+pg_dump -h localhost -U postgres -p 5432 -d gestion_employes > monprojet/sauvegardes_db/export_YYYYMMDD.sql
+```
+
+### Restauration de la Base de Données
+```bash
+psql -h localhost -U postgres -d gestion_employes < monprojet/sauvegardes_db/export_YYYYMMDD.sql
 ```
 
 ## Contribution
