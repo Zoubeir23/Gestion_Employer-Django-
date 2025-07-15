@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Simple des Graphiques</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container mt-4">
+        <h1 class="mb-4">🧪 Test Simple des Graphiques</h1>
+        
+        <div class="row g-4">
+            <!-- Graphique Services -->
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>📊 Employés par Service</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="testServicesChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Graphique Congés -->
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>📅 Statut des Congés</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="testCongesChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Graphique Embauches -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>📈 Évolution des Embauches</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="testEmbauchesChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="alert alert-info mt-4">
+            <h6>📋 Instructions :</h6>
+            <ol>
+                <li>Si ces graphiques s'affichent → Le problème vient des données Django</li>
+                <li>Si ces graphiques ne s'affichent pas → Le problème vient de Chart.js</li>
+                <li>Ouvre la console (F12) pour voir les messages d'erreur</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('🚀 Test des graphiques démarré');
+        
+        // Données de test
+        const testServicesData = [
+            {nom: "Informatique", nb_employes: 8},
+            {nom: "Ressources Humaines", nb_employes: 4},
+            {nom: "Comptabilité", nb_employes: 3},
+            {nom: "Marketing", nb_employes: 5}
+        ];
+        
+        const testCongesData = {
+            en_attente: 3,
+            approuves: 12,
+            rejetes: 2
+        };
+        
+        const testEmbauchesData = [
+            {mois: "Août 2024", count: 2},
+            {mois: "Septembre 2024", count: 1},
+            {mois: "Octobre 2024", count: 3},
+            {mois: "Novembre 2024", count: 0},
+            {mois: "Décembre 2024", count: 1},
+            {mois: "Janvier 2025", count: 2}
+        ];
+        
+        // Couleurs
+        const colors = {
+            primary: '#0d6efd',
+            success: '#198754',
+            warning: '#ffc107',
+            danger: '#dc3545',
+            info: '#0dcaf0',
+            secondary: '#6c757d'
+        };
+        
+        try {
+            // Graphique Services
+            const servicesCtx = document.getElementById('testServicesChart');
+            if (servicesCtx) {
+                new Chart(servicesCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: testServicesData.map(item => item.nom),
+                        datasets: [{
+                            data: testServicesData.map(item => item.nb_employes),
+                            backgroundColor: [
+                                colors.primary,
+                                colors.success,
+                                colors.warning,
+                                colors.info
+                            ],
+                            borderWidth: 2,
+                            borderColor: '#fff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+                console.log('✅ Graphique services créé');
+            }
+            
+            // Graphique Congés
+            const congesCtx = document.getElementById('testCongesChart');
+            if (congesCtx) {
+                new Chart(congesCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['En attente', 'Approuvés', 'Rejetés'],
+                        datasets: [{
+                            data: [testCongesData.en_attente, testCongesData.approuves, testCongesData.rejetes],
+                            backgroundColor: [
+                                colors.warning,
+                                colors.success,
+                                colors.danger
+                            ],
+                            borderWidth: 2,
+                            borderColor: '#fff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+                console.log('✅ Graphique congés créé');
+            }
+            
+            // Graphique Embauches
+            const embauchesCtx = document.getElementById('testEmbauchesChart');
+            if (embauchesCtx) {
+                new Chart(embauchesCtx, {
+                    type: 'line',
+                    data: {
+                        labels: testEmbauchesData.map(item => item.mois),
+                        datasets: [{
+                            label: 'Nouvelles embauches',
+                            data: testEmbauchesData.map(item => item.count),
+                            borderColor: colors.primary,
+                            backgroundColor: colors.primary + '20',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4,
+                            pointBackgroundColor: colors.primary,
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    stepSize: 1
+                                }
+                            }
+                        }
+                    }
+                });
+                console.log('✅ Graphique embauches créé');
+            }
+            
+            console.log('🎉 Tous les graphiques de test créés avec succès !');
+            
+        } catch (error) {
+            console.error('❌ Erreur lors de la création des graphiques:', error);
+        }
+    });
+    </script>
+</body>
+</html>

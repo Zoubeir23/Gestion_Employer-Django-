@@ -137,3 +137,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Crispy Forms
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+# Authentication
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
+
+# Session et CSRF
+SESSION_COOKIE_AGE = 3600  # 1 heure
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+CSRF_COOKIE_AGE = 3600
+CSRF_USE_SESSIONS = False

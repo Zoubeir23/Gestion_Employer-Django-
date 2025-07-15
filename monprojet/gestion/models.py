@@ -86,11 +86,55 @@ class Conge(models.Model):
 
     def get_duree(self):
         return (self.date_fin - self.date_debut).days + 1
+    
+    @property
+    def duree_jours(self):
+        """Retourne la durée en jours"""
+        return self.get_duree()
+    
+    @property
+    def est_en_cours(self):
+        """Vérifie si le congé est actuellement en cours"""
+        today = timezone.now().date()
+        return self.date_debut <= today <= self.date_fin and self.statut == 'APPROUVE'
+    
+    @property
+    def jours_restants(self):
+        """Calcule le nombre de jours restants avant le début du congé"""
+        today = timezone.now().date()
+        if self.date_debut > today:
+            return (self.date_debut - today).days
+        return 0
+    
+    @property
+    def est_urgent(self):
+        """Vérifie si la demande est urgente (en attente depuis plus de 7 jours)"""
+        if self.statut == 'EN_ATTENTE':
+            return (timezone.now().date() - self.date_demande.date()).days > 7
+        return False
 
     def clean(self):
         from django.core.exceptions import ValidationError
         if self.date_debut and self.date_fin:
             if self.date_debut > self.date_fin:
                 raise ValidationError("La date de début doit être antérieure à la date de fin")
-            if self.date_debut < timezone.now().date():
-                raise ValidationError("La date de début ne peut pas être dans le passé")
+            
+            # Vérifier les chevauchements pour le même employé
+            if self.pk:  # Si c'est une modification
+                chevauchements = Conge.objects.filter(
+                    employer=self.employer,
+                    statut='APPROUVE'
+                ).exclude(pk=self.pk).filter(
+                    date_debut__lte=self.date_fin,
+                    date_fin__gte=self.date_debut
+                )
+            else:  # Si c'est une nouvelle demande
+                chevauchements = Conge.objects.filter(
+                    employer=self.employer,
+                    statut='APPROUVE',
+                    date_debut__lte=self.date_fin,
+                    date_fin__gte=self.date_debut
+                )
+            
+            if chevauchements.exists():
+                raise ValidationError("Cette période chevauche avec un congé déjà approuvé")

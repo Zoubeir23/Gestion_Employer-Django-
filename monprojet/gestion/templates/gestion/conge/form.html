@@ -1,6 +1,7 @@
-{% extends 'gestion/shared/form_base.html' %}
+{% extends 'gestion/base.html' %}
+{% load crispy_forms_tags %}
 
-{% block form_title %}
+{% block title %}
     {% if form.instance.pk %}
         Modifier la demande de congé
     {% else %}
@@ -8,12 +9,30 @@
     {% endif %}
 {% endblock %}
 
-{% block submit_text %}
-    {% if form.instance.pk %}
-        Mettre à jour
-    {% else %}
-        Soumettre
-    {% endif %}
-{% endblock %}
-
-{% block cancel_url %}{% url 'conge-list' %}{% endblock %} 
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">
+                <i class="fas fa-calendar-plus me-2"></i>
+                {% if form.instance.pk %}
+                    Modifier la demande de congé
+                {% else %}
+                    Nouvelle demande de congé
+                {% endif %}
+            </h4>
+        </div>
+        <div class="card-body">
+            <form method="post" novalidate>
+                {% csrf_token %}
+                {% crispy form %}
+            </form>
+        </div>
+        <div class="card-footer">
+            <a href="{% url 'conge-list' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Retour à la liste
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %} 

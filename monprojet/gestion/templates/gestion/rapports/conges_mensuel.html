@@ -1,0 +1,179 @@
+{% extends 'gestion/base.html' %}
+{% load static %}
+
+{% block title %}Rapport Mensuel des Congés - {{ mois_nom }}{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h2 class="mb-4">
+            <i class="fas fa-chart-bar me-2"></i>Rapport Mensuel des Congés - {{ mois_nom }}
+        </h2>
+    </div>
+    <div class="col-auto">
+        <div class="btn-group">
+            <a href="{% url 'export-conges' %}" class="btn btn-success">
+                <i class="fas fa-download me-1"></i>Export CSV
+            </a>
+            <button class="btn btn-primary" onclick="window.print()">
+                <i class="fas fa-print me-1"></i>Imprimer
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Statistiques générales -->
+<div class="row g-4 mb-4">
+    <div class="col-md-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body text-center">
+                <i class="fas fa-calendar-alt fa-2x mb-2"></i>
+                <h3>{{ stats.total }}</h3>
+                <p class="mb-0">Total congés</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-success text-white">
+            <div class="card-body text-center">
+                <i class="fas fa-check-circle fa-2x mb-2"></i>
+                <h3>{{ stats.approuves }}</h3>
+                <p class="mb-0">Approuvés</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body text-center">
+                <i class="fas fa-clock fa-2x mb-2"></i>
+                <h3>{{ stats.en_attente }}</h3>
+                <p class="mb-0">En attente</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-danger text-white">
+            <div class="card-body text-center">
+                <i class="fas fa-times-circle fa-2x mb-2"></i>
+                <h3>{{ stats.rejetes }}</h3>
+                <p class="mb-0">Rejetés</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Congés par service -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="fas fa-building me-2"></i>Congés par service</h5>
+            </div>
+            <div class="card-body">
+                {% if conges_par_service %}
+                <canvas id="serviceChart" width="400" height="300"></canvas>
+                {% else %}
+                <p class="text-muted text-center">Aucune donnée disponible</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Congés par type -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="fas fa-tags me-2"></i>Congés par type</h5>
+            </div>
+            <div class="card-body">
+                {% if conges_par_type %}
+                <canvas id="typeChart" width="400" height="300"></canvas>
+                {% else %}
+                <p class="text-muted text-center">Aucune donnée disponible</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Détail des congés -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="fas fa-list me-2"></i>Détail des congés du mois</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Employé</th>
+                                <th>Service</th>
+                                <th>Type</th>
+                                <th>Période</th>
+                                <th>Durée</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for conge in conges_detail %}
+                            <tr>
+                                <td>{{ conge.employer.prenom }} {{ conge.employer.nom }}</td>
+                                <td>{{ conge.employer.service.nom|default:"-" }}</td>
+                                <td>{{ conge.get_type_conge_display }}</td>
+                                <td>{{ conge.date_debut|date:"d/m/Y" }} - {{ conge.date_fin|date:"d/m/Y" }}</td>
+                                <td>{{ conge.duree_jours }} jour(s)</td>
+                                <td>
+                                    {% if conge.statut == 'APPROUVE' %}
+                                    <span class="badge bg-success">{{ conge.get_statut_display }}</span>
+                                    {% elif conge.statut == 'EN_ATTENTE' %}
+                                    <span class="badge bg-warning">{{ conge.get_statut_display }}</span>
+                                    {% else %}
+                                    <span class="badge bg-danger">{{ conge.get_statut_display }}</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{% url 'conge-detail' conge.pk %}" class="btn btn-sm btn-outline-info">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="7" class="text-center">Aucun congé pour ce mois</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Données JSON pour les graphiques -->
+{% if conges_par_service %}
+<script id="service-chart-data" type="application/json">
+{
+  "labels": [{% for item in conges_par_service %}"{{ item.employer__service__nom|default:"Sans service" }}"{% if not forloop.last %},{% endif %}{% endfor %}],
+  "data": [{% for item in conges_par_service %}{{ item.count }}{% if not forloop.last %},{% endif %}{% endfor %}]
+}
+</script>
+{% endif %}
+
+{% if conges_par_type %}
+<script id="type-chart-data" type="application/json">
+{
+  "labels": [{% for item in conges_par_type %}"{{ item.type_conge }}"{% if not forloop.last %},{% endif %}{% endfor %}],
+  "data": [{% for item in conges_par_type %}{{ item.count }}{% if not forloop.last %},{% endif %}{% endfor %}]
+}
+</script>
+{% endif %}
+
+<!-- JavaScript des rapports -->
+<script src="{% static 'js/reports.js' %}"></script>
+{% endblock %}
