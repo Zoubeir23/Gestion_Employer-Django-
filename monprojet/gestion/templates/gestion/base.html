@@ -6,16 +6,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Gestion des Employés{% endblock %}</title>
-    
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+
     <!-- CSS personnalisé -->
-    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+    <link href="{% static 'CSS/main.css' %}" rel="stylesheet">
     {% block extra_css %}{% endblock %}
 </head>
 
@@ -48,39 +48,44 @@
                         </a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="rapportsDropdown" role="button" data-bs-toggle="dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="rapportsDropdown" role="button"
+                            data-bs-toggle="dropdown">
                             <i class="fas fa-chart-bar me-1"></i> Rapports
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{% url 'rapport-conges-mensuel' %}">
-                                <i class="fas fa-calendar-check me-1"></i> Congés mensuels
-                            </a></li>
-                            <li><hr class="dropdown-divider"></li>
+                                    <i class="fas fa-calendar-check me-1"></i> Congés mensuels
+                                </a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
                             <li><a class="dropdown-item" href="{% url 'export-employers' %}">
-                                <i class="fas fa-download me-1"></i> Export employés
-                            </a></li>
+                                    <i class="fas fa-download me-1"></i> Export employés
+                                </a></li>
                             <li><a class="dropdown-item" href="{% url 'export-conges' %}">
-                                <i class="fas fa-download me-1"></i> Export congés
-                            </a></li>
+                                    <i class="fas fa-download me-1"></i> Export congés
+                                </a></li>
                         </ul>
                     </li>
                     {% endif %}
                 </ul>
-                
+
                 <!-- Barre de recherche globale -->
                 {% if user.is_authenticated %}
                 <div class="d-flex me-3">
                     <div class="search-container">
-                        <input type="text" id="globalSearch" class="form-control" placeholder="Rechercher..." style="width: 250px;">
+                        <input type="text" id="globalSearch" class="form-control" placeholder="Rechercher..."
+                            style="width: 250px;">
                         <div id="searchResults" class="search-results" style="display: none;"></div>
                     </div>
                 </div>
                 {% endif %}
-                
+
                 <ul class="navbar-nav">
                     {% if user.is_authenticated %}
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown">
                             <i class="fas fa-user me-1"></i> {{ user.username }}
                             {% if user.is_staff %}
                             <span class="badge bg-warning ms-1">Admin</span>
@@ -139,18 +144,18 @@
     <!-- Footer -->
     <footer class="bg-white py-3 mt-5 border-top">
         <div class="container text-center">
-            <span class="text-muted">© 2024 Gestion des Employés</span>
+            <span class="text-muted">© 2025 Gestion des Employés</span>
         </div>
     </footer>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <!-- JavaScript personnalisé -->
     {% if user.is_authenticated %}
     <script src="{% static 'js/main.js' %}"></script>
     {% endif %}
-    
+
     <!-- Données pour JavaScript -->
     <div style="display: none;">
         <div data-api-search="{% url 'api-recherche' %}"></div>
@@ -159,7 +164,7 @@
         <div data-url-service-create="{% url 'service-create' %}"></div>
         <div data-url-conge-create="{% url 'conge-create' %}"></div>
     </div>
-    
+
     {% block extra_js %}{% endblock %}
 </body>
 

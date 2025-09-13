@@ -234,10 +234,47 @@ psql -h localhost -U postgres -d gestion_employes < monprojet/sauvegardes_db/exp
 4. Push vers la branche (`git push origin feature/AmazingFeature`)
 5. Ouvrir une Pull Request
 
-## Licence
+## 📄 Licence
 
-Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
+Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
 
-## Contact
+**Copyright (c) 2025 Zoubeir Ibrahim**
 
-Pour toute question ou suggestion, n'hésitez pas à ouvrir une issue. 
+Vous êtes libre de :
+- ✅ Utiliser ce logiciel à des fins commerciales et personnelles
+- ✅ Modifier et distribuer le code source
+- ✅ Créer des œuvres dérivées
+- ✅ Utiliser le code dans des projets privés
+
+**Conditions :**
+- 📋 Inclure la notice de copyright et de licence
+- 🚫 Aucune garantie fournie
+
+## 👨‍💻 Auteur
+
+**Zoubeir Ibrahim**
+- 📧 Email : Zoubeiribrahima@gmail.com
+- 🐙 GitHub : Zoubeir23
+
+## 🤝 Contribution
+
+Les contributions sont les bienvenues ! Pour contribuer :
+
+1. **Fork** le projet
+2. **Créer** une branche feature (`git checkout -b feature/AmazingFeature`)
+3. **Commit** vos changements (`git commit -m 'Add some AmazingFeature'`)
+4. **Push** vers la branche (`git push origin feature/AmazingFeature`)
+5. **Ouvrir** une Pull Request
+
+### 📝 Guidelines de Contribution
+- Suivre les conventions PEP 8 pour Python
+- Ajouter des tests pour les nouvelles fonctionnalités
+- Documenter les changements dans le README
+- Respecter la structure existante du projet
+
+## 💬 Support
+
+Pour toute question, suggestion ou problème :
+- 🐛 **Issues** : Ouvrir une issue sur GitHub
+- 📧 **Email** : Zoubeiribrahima@gmail.com
+- 📖 **Documentation** : Consulter le fichier [RECAP.md](RECAP.md) 

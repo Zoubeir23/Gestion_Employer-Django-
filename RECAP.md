@@ -1,7 +1,10 @@
 # Documentation Technique - Système de Gestion des Employés
 
-**Auteur :** Zoubeir23  
-**Email :** Zoubeiribrahima@gmail.com
+**Auteur :** Zoubeir Ibrahim (Zoubeir23)  
+**Email :** Zoubeiribrahima@gmail.com  
+**Licence :** MIT License  
+**Version :** 1.0.0  
+**Date :** Janvier 2025
 
 ## Table des Matières
 1. [Introduction](#introduction)
